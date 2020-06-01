@@ -56,28 +56,34 @@ function init() {
   scene.add(light);
 
   // world
-  var geometry = new THREE.BoxBufferGeometry(10, 10, 10, 4, 1);
+  var geometry = new THREE.BoxBufferGeometry(30, 30, 30, 4, 1);
   var material = new THREE.MeshPhongMaterial({
     ambient: 0x050505,
-    color: 0x0033ff,
-    specular: 0x555555,
-    shininess: 30,
+    color: 0xe2e2e2,
+    specular: 0x2784,
+    shininess: 100,
+    opacity: 0.1,
+    transparent: true,
   });
 
-  for (var i = 0; i < 500; i++) {
-    var mesh = new THREE.Mesh(geometry, material);
-    mesh.position.x = Math.random() * 1600 - 800;
-    mesh.position.y = 0;
-    mesh.position.z = Math.random() * 1600 - 800;
-    mesh.updateMatrix();
-    mesh.matrixAutoUpdate = false;
-    scene.add(mesh);
+  for (var x = 0; x < 400; x += 40) {
+    for (var y = 0; y < 400; y += 40) {
+      for (var z = 0; z < 400; z += 40) {
+        var mesh = new THREE.Mesh(geometry, material);
+        mesh.position.x = x;
+        mesh.position.y = y;
+        mesh.position.z = z;
+        mesh.updateMatrix();
+        mesh.matrixAutoUpdate = false;
+        scene.add(mesh);
+      }
+    }
   }
 
   //Create floor
   var planeGeometry = new THREE.PlaneBufferGeometry(500, 500, 1, 1);
   var planeMaterial = new THREE.MeshBasicMaterial({
-    color: 0x000000,
+    color: 0xe8e8e8,
     side: THREE.DoubleSide,
   });
   var plane = new THREE.Mesh(planeGeometry, planeMaterial);
