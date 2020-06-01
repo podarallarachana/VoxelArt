@@ -13,7 +13,7 @@ animate();
 function init() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0xffffff);
-  scene.fog = new THREE.FogExp2(0xffffff, 0.002);
+  //   scene.fog = new THREE.FogExp2(0xffffff, 0.002);
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -47,18 +47,21 @@ function init() {
   controls.maxPolarAngle = Math.PI / 2;
 
   // lights
-  // White directional light at half intensity shining from the top.
-  var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  scene.add(directionalLight);
+  var light = new THREE.DirectionalLight(0xffffff);
+  light.position.set(1, 1, 1).normalize();
+  scene.add(light);
 
-  var light = new THREE.AmbientLight(0x404040); // soft white light
+  var light = new THREE.DirectionalLight(0xffffff);
+  light.position.set(-1, -1, -1).normalize();
   scene.add(light);
 
   // world
   var geometry = new THREE.BoxBufferGeometry(10, 10, 10, 4, 1);
   var material = new THREE.MeshPhongMaterial({
-    color: 0x2ee860,
-    flatShading: true,
+    ambient: 0x050505,
+    color: 0x0033ff,
+    specular: 0x555555,
+    shininess: 30,
   });
 
   for (var i = 0; i < 500; i++) {
@@ -78,6 +81,7 @@ function init() {
     side: THREE.DoubleSide,
   });
   var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+  plane.position.y = -5;
   plane.rotateX(-Math.PI / 2);
   scene.add(plane);
 
